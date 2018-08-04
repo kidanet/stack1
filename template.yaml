@@ -69,7 +69,7 @@ Resources:
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
         - ResourceName: function1
-      CodeUri: src/function626A1C37
+      CodeUri: src/function1
       Handler: handler.handler
       Runtime: python3.6
       MemorySize: 1024
