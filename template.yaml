@@ -105,7 +105,7 @@ Resources:
       Engine: mariadb
       EngineVersion: '10.2'
       MasterUsername: root
-      MasterUserPassword: ''
+      MasterUserPassword: !Ref StackeryEnvConfigrootPasswordAsString
       MultiAZ: false
       PubliclyAccessible: false
       StorageType: gp2
@@ -113,9 +113,11 @@ Resources:
         - Key: Name
           Value: !Sub
             - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Database ${ResourceName}
-            - ResourceName: database276078F1
+            - ResourceName: db1
       VPCSecurityGroups:
         - !Ref database276078F1SecurityGroup
+    Metadata:
+      StackeryName: db1
   database276078F1SubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
@@ -143,7 +145,7 @@ Resources:
         - Key: Name
           Value: !Sub
             - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Database ${ResourceName} VPC Security Group
-            - ResourceName: database276078F1
+            - ResourceName: db1
       VpcId: !Ref virtualNetwork8893D2CF
   virtualNetwork8893D2CF:
     Type: AWS::EC2::VPC
@@ -374,6 +376,11 @@ Parameters:
   StackeryEnvironmentAPIGatewayStageName:
     Type: String
     Description: Environment name used for API Gateway Stage names (injected by Stackery at deployment time)
+  StackeryEnvConfigrootPasswordAsString:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /Stackery/Environments/<StackeryEnvId>/Config/rootPassword
 Metadata:
   StackeryErrorsTargets:
     function8E6C5467: {}
+  StackeryEnvConfigParameters:
+    StackeryEnvConfigrootPasswordAsString: rootPassword
